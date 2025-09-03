@@ -130,7 +130,7 @@ IAmazonSQS sqsClient = new AmazonSQSClient(
         RegionEndpoint = Amazon.RegionEndpoint.GetBySystemName(awsRegion)
     });
 
-// Register SQS client with DI`
+// Register SQS client with DI
 builder.Services.AddSingleton(sqsClient);
 #endregion
 

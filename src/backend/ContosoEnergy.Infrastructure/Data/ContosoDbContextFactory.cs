@@ -17,15 +17,15 @@ namespace ContosoEnergy.Infrastructure.Data
         /// <returns>A configured ContosoDbContext instance.</returns>
         public ContosoDbContext CreateDbContext(string[] args)
         {
-            // 1️⃣ Create a DbContextOptionsBuilder for ContosoDbContext
+            // Create a DbContextOptionsBuilder for ContosoDbContext
             var optionsBuilder = new DbContextOptionsBuilder<ContosoDbContext>();
 
-            // 2️⃣ Configure the database provider to PostgreSQL
+            // Configure the database provider to PostgreSQL
             // Replace with your actual host, database, username, and password
             optionsBuilder.UseNpgsql(
                 "Host=localhost;Database=ContosoEnergyDb;Username=postgres;Password=YourPassword");
 
-            // 3️⃣ Return a new ContosoDbContext instance with the configured options
+            // Return a new ContosoDbContext instance with the configured options
             return new ContosoDbContext(optionsBuilder.Options);
         }
     }
