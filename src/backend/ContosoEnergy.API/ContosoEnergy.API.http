@@ -1,0 +1,6 @@
+@ContosoEnergy.API_HostAddress = http://localhost:5032
+
+GET {{ContosoEnergy.API_HostAddress}}/jobs/
+Accept: application/json
+
+###

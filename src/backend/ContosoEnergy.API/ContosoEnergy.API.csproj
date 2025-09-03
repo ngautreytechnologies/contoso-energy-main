@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Domain / Architecture -->
+		<PackageReference Include="Ardalis.Result" Version="10.1.0" />
+		<PackageReference Include="Ardalis.Specification" Version="9.2.0" />
+		<PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="4.0.2.1" />
+
+		<!-- OpenAPI / Swagger -->
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+
+		<!-- EF Core -->
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+
+		<!-- Logging -->
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
+		<PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+
+		<!-- OpenTelemetry -->
+		<PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.9.0-beta.2" />
+		<PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.9.0" />
+		<PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
+
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ContosoEnergy.Core\ContosoEnergy.Core.csproj" />
+		<ProjectReference Include="..\ContosoEnergy.Infrastructure\ContosoEnergy.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="DTOs\" />
+		<Folder Include="Mappings\" />
+	</ItemGroup>
+
+</Project>

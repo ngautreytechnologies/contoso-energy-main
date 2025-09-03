@@ -1,0 +1,209 @@
+openapi: 3.1.0
+info:
+  title: Contoso Energy API
+  version: "1.0.0"
+  description: OpenAPI specification for Contoso Energy backend and AI services
+servers:
+  - url: http://localhost:5000/api
+    description: Backend API
+  - url: http://localhost:5001/ai
+    description: AI Module API
+
+paths:
+
+  # Backend API
+  /jobs:
+    get:
+      summary: Get all jobs
+      responses:
+        "200":
+          description: List of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Job"
+    post:
+      summary: Create a new job
+      requestBody:
+        description: Job object
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobCreate"
+      responses:
+        "201":
+          description: Job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "400":
+          description: Invalid input
+
+  /jobs/{jobId}:
+    get:
+      summary: Get job by ID
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Job details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "404":
+          description: Job not found
+    put:
+      summary: Update a job
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JobUpdate"
+      responses:
+        "200":
+          description: Job updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "400":
+          description: Invalid input
+        "404":
+          description: Job not found
+    delete:
+      summary: Delete a job
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Job deleted
+        "404":
+          description: Job not found
+
+  /health:
+    get:
+      summary: API health check
+      responses:
+        "200":
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "ok"
+
+  # AI Module API
+  /job/submit:
+    post:
+      summary: Submit a new AI job
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AIJobRequest"
+      responses:
+        "201":
+          description: Job submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIJobResponse"
+        "400":
+          description: Invalid input
+        "500":
+          description: Server error
+
+  /job/{jobId}/result:
+    get:
+      summary: Get AI job result
+      parameters:
+        - in: path
+          name: jobId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Job result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIJobResponse"
+        "404":
+          description: Job not found
+        "500":
+          description: Server error
+
+components:
+  schemas:
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, completed, failed]
+        createdAt:
+          type: string
+          format: date-time
+    JobCreate:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    JobUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, completed, failed]
+    AIJobRequest:
+      type: object
+      required:
+        - inputData
+      properties:
+        inputData:
+          type: object
+          description: Arbitrary AI job input
+    AIJobResponse:
+      type: object
+      properties:
+        jobId:
+          type: integer
+        status:
+          type: string
+          enum: [queued, running, completed, failed]
+        result:
+          type: object
+          description: Job result if completed

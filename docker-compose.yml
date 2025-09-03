@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  backend-api:
+    build: ./src/backend/API
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+  frontend:
+    build: ./src/frontend
+    ports:
+      - "3000:80"
+  ai-service:
+    build: ./src/ai
+    ports:
+      - "5001:5001"
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: contoso
+    ports:
+      - "5432:5432"

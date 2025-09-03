@@ -1,0 +1,205 @@
+openapi: 3.1.0
+info:
+  title: Contoso Energy JobService API
+  description: MVP endpoints for interview solution. Tags include FR/NFR traceability.
+  version: 1.0.0
+servers:
+  - url: https://api.contosoenergy.local
+    description: Local dev server
+
+tags:
+  - name: jobs
+    description: Job management endpoints (FR-01, FR-02, FR-03)
+  - name: ai-jobs
+    description: AI job orchestration endpoints (FR-01, FR-02, FR-03)
+  - name: customers
+    description: Customer data endpoints (FR-04)
+  - name: auth
+    description: Authentication endpoints (FR-05)
+  - name: MVP
+    description: Endpoints included in MVP/interview solution
+
+paths:
+  /jobs:
+    post:
+      tags:
+        - jobs
+        - MVP
+      summary: Create a new Job
+      operationId: createJob
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Meter Reading"
+      responses:
+        '201':
+          description: Job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+    get:
+      tags:
+        - jobs
+        - MVP
+      summary: Retrieve all Jobs
+      operationId: getAllJobs
+      responses:
+        '200':
+          description: List of jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+
+  /jobs/{id}:
+    get:
+      tags:
+        - jobs
+        - MVP
+      summary: Retrieve a Job by ID
+      operationId: getJobById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Job found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        '404':
+          description: Job not found
+
+  /ai-jobs:
+    post:
+      tags:
+        - ai-jobs
+        - MVP
+      summary: Submit AI job for prediction
+      operationId: submitAIJob
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                inputData:
+                  type: string
+                  example: "Sample data"
+      responses:
+        '201':
+          description: AI job submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIJob'
+
+  /ai-jobs/{jobId}:
+    get:
+      tags:
+        - ai-jobs
+        - MVP
+      summary: Fetch AI job status/results
+      operationId: getAIJobStatus
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: AI job status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AIJob'
+
+  /ai-jobs/history:
+    get:
+      tags:
+        - ai-jobs
+        - MVP
+      summary: List past AI jobs
+      operationId: listAIJobs
+      responses:
+        '200':
+          description: List of AI jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AIJob'
+
+  /customers/{id}:
+    get:
+      tags:
+        - customers
+      summary: Display customer info
+      operationId: getCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Customer data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '404':
+          description: Customer not found
+
+components:
+  schemas:
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Meter Reading"
+    AIJob:
+      type: object
+      properties:
+        jobId:
+          type: string
+          example: "abc123"
+        status:
+          type: string
+          example: "Pending"
+        result:
+          type: string
+          nullable: true
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 42
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "john.doe@contosoenergy.com"
