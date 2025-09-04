@@ -1,0 +1,236 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Portfolio Project Story Schema",
+    "type": "object",
+    "required": [
+        "title",
+        "summary",
+        "problem",
+        "solution",
+        "role",
+        "tech_stack",
+        "overview"
+    ],
+    "properties": {
+        "title": {
+            "type": "string",
+            "description": "Project title"
+        },
+        "summary": {
+            "type": "string",
+            "description": "One-liner project summary"
+        },
+        "problem": {
+            "type": "string",
+            "description": "The main challenge this project solves"
+        },
+        "solution": {
+            "type": "string",
+            "description": "How the problem was solved"
+        },
+        "role": {
+            "type": "string",
+            "description": "Your role and contributions"
+        },
+        "tech_stack": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Technologies used in the project"
+        },
+        "overview": {
+            "type": "object",
+            "properties": {
+                "architecture": {
+                    "type": "object",
+                    "properties": {
+                        "styles": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "key_components": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "design_patterns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "architecture": {
+            "type": "object",
+            "properties": {
+                "style": {
+                    "type": "string"
+                },
+                "key_components": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "diagram_url": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "additionalProperties": false
+        },
+        "challenges": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "impact": {
+            "type": "object",
+            "properties": {
+                "metrics": {
+                    "type": "object",
+                    "properties": {
+                        "processing_time_reduction": {
+                            "type": "string"
+                        },
+                        "cost_savings": {
+                            "type": "string"
+                        },
+                        "transactions_processed": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "business_outcome": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "links": {
+            "type": "object",
+            "properties": {
+                "github": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "demo": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "docs": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "additionalProperties": false
+        },
+        "media": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "type",
+                    "url"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "caption": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "timeline": {
+            "type": "object",
+            "properties": {
+                "start": {
+                    "type": "string",
+                    "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
+                },
+                "end": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "flow": {
+            "type": "object",
+            "required": [
+                "steps"
+            ],
+            "properties": {
+                "steps": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [
+                            "id",
+                            "type",
+                            "name",
+                            "action"
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "action": {
+                                "type": "string"
+                            },
+                            "params": {
+                                "type": "object"
+                            },
+                            "depends_on": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "retries": {
+                                "type": "integer",
+                                "minimum": 0
+                            },
+                            "timeout_sec": {
+                                "type": "integer",
+                                "minimum": 0
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "additionalProperties": false
+}

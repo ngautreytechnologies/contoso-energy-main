@@ -1,0 +1,172 @@
+{
+    "$schema": "./schemas/story.schema.json",
+    "title": "High-Volume Energy Event Processing Microservice",
+    "summary": "A C# microservice handles energy device events at high throughput, enriched asynchronously by a Python AI sidecar, with storage and analytics on AWS.",
+    "problem": "Energy devices generate high-velocity event streams that require scalable ingestion, processing, enrichment, and analytics while remaining cost-efficient and resilient.",
+    "solution": "Implemented a C# microservice consuming events from Kinesis, persisting to DynamoDB, triggering a Python AI sidecar for event enrichment, storing enriched events in S3/DocumentDB, with Timestream for analytics and Redis for hot storage.",
+    "role": "Designed the architecture, implemented the C# microservice and Python sidecar, set up AWS infrastructure including Kinesis, DynamoDB, Timestream, Redis, and S3, and performed load testing and monitoring.",
+    "tech_stack": [
+        "C#",
+        "Python",
+        "AWS (Kinesis, DynamoDB, Timestream, S3, Lambda)",
+        "Redis",
+        "Microservices",
+        "Serverless",
+        "AI/ML Sidecar",
+        "LocalStack"
+    ],
+    "overview": {
+        "architecture": {
+            "styles": [
+                "Microservices",
+                "Event-Driven",
+                "Serverless",
+                "Clean Architecture"
+            ],
+            "key_components": [
+                "C# Microservice",
+                "Python AI Sidecar",
+                "Amazon Kinesis",
+                "Amazon DynamoDB",
+                "Amazon Timestream",
+                "Amazon S3",
+                "Redis Cache",
+                "AWS Lambda"
+            ]
+        },
+        "design_patterns": [
+            "Sidecar Pattern",
+            "CQRS (Command Query Responsibility Segregation)"
+        ]
+    },
+    "challenges": [
+        "High throughput ingestion of 1M events/sec",
+        "Ensuring AI sidecar does not block microservice processing",
+        "Cost-efficient architecture for intermittent sidecar usage",
+        "Maintaining low latency for hot queries"
+    ],
+    "impact": {
+        "metrics": {
+            "processing_time_reduction": "Handled up to 1M events/sec without bottlenecks",
+            "cost_savings": "Optimized sidecar usage and serverless components reduced operational cost by ~30%",
+            "transactions_processed": "Millions of events processed per day across devices"
+        },
+        "business_outcome": "Enabled scalable energy event processing with predictive insights and analytics dashboards, improving operational efficiency and anomaly detection."
+    },
+    "links": {
+        "github": "https://github.com/YOUR_GITHUB_USERNAME/energy-microservice",
+        "demo": "",
+        "docs": ""
+    },
+    "media": [
+        {
+            "type": "image",
+            "url": "",
+            "caption": "Architecture diagram"
+        }
+    ],
+    "timeline": {
+        "start": "2025-01",
+        "end": "2025-03"
+    },
+    "tags": [
+        "microservice",
+        "serverless",
+        "AWS",
+        "C#",
+        "Python",
+        "AI",
+        "full-stack"
+    ],
+    "flow": {
+        "steps": [
+            {
+                "id": "step-1",
+                "type": "ingestion",
+                "name": "Event Ingestion",
+                "action": "Receive JSON events from energy devices and push to Kinesis stream",
+                "params": {
+                    "payload_size": "100-500 bytes",
+                    "throughput": "1M records/sec"
+                },
+                "depends_on": [],
+                "retries": 3,
+                "timeout_sec": 5
+            },
+            {
+                "id": "step-2",
+                "type": "microservice",
+                "name": "C# Microservice Processing",
+                "action": "Consume Kinesis events, persist to DynamoDB, trigger AI sidecar",
+                "params": {
+                    "db_table": "EnergyEvents",
+                    "sidecar_trigger": true
+                },
+                "depends_on": [
+                    "step-1"
+                ],
+                "retries": 3,
+                "timeout_sec": 10
+            },
+            {
+                "id": "step-3",
+                "type": "sidecar",
+                "name": "Python AI Sidecar",
+                "action": "Enrich events with AI predictions and write to S3 / DocumentDB",
+                "params": {
+                    "ai_model": "EventAnomalyDetector",
+                    "batch_size": 1000
+                },
+                "depends_on": [
+                    "step-2"
+                ],
+                "retries": 2,
+                "timeout_sec": 20
+            },
+            {
+                "id": "step-4",
+                "type": "analytics",
+                "name": "Time-Series Analytics",
+                "action": "Aggregate and query events from Timestream for dashboards",
+                "params": {
+                    "aggregation_interval": "1h"
+                },
+                "depends_on": [
+                    "step-3"
+                ],
+                "retries": 1,
+                "timeout_sec": 30
+            },
+            {
+                "id": "step-5",
+                "type": "cache",
+                "name": "Hot Storage / Cache",
+                "action": "Store frequently accessed data in Redis for low-latency queries",
+                "params": {
+                    "ttl_sec": 300
+                },
+                "depends_on": [
+                    "step-2"
+                ],
+                "retries": 1,
+                "timeout_sec": 5
+            },
+            {
+                "id": "step-6",
+                "type": "documentation",
+                "name": "Code Documentation & Metadata",
+                "action": "Generate documentation and metadata for all microservices and sidecar using automated doc engine",
+                "params": {
+                    "doc_engine": "AutoDocGen",
+                    "output_format": "Markdown/JSON"
+                },
+                "depends_on": [
+                    "step-2",
+                    "step-3"
+                ],
+                "retries": 1,
+                "timeout_sec": 60
+            }
+        ]
+    }
+}
