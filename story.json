@@ -1,171 +1,187 @@
 {
-    "$schema": "./schemas/story.schema.json",
-    "title": "High-Volume Energy Event Processing Microservice",
-    "summary": "A C# microservice handles energy device events at high throughput, enriched asynchronously by a Python AI sidecar, with storage and analytics on AWS.",
-    "problem": "Energy devices generate high-velocity event streams that require scalable ingestion, processing, enrichment, and analytics while remaining cost-efficient and resilient.",
-    "solution": "Implemented a C# microservice consuming events from Kinesis, persisting to DynamoDB, triggering a Python AI sidecar for event enrichment, storing enriched events in S3/DocumentDB, with Timestream for analytics and Redis for hot storage.",
-    "role": "Designed the architecture, implemented the C# microservice and Python sidecar, set up AWS infrastructure including Kinesis, DynamoDB, Timestream, Redis, and S3, and performed load testing and monitoring.",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Contoso Energy - Serverless Event-Driven Architecture",
+    "summary": "An enterprise-grade event-driven platform for processing and enriching energy telemetry data using AWS serverless services and ML pipelines.",
+    "problem": "Energy providers face challenges ingesting high-volume telemetry from distributed devices, enriching it with AI insights, and delivering real-time analytics without scaling issues or high operational overhead.",
+    "solution": "Built a loosely coupled, serverless event-driven architecture on AWS where IoT telemetry flows through Kinesis into a C# microservice, enriched via a Python AI sidecar, persisted in DynamoDB and S3, orchestrated with EventBridge and Step Functions, and analyzed through Redshift, Athena, and QuickSight dashboards.",
     "tech_stack": [
         "C#",
         "Python",
-        "AWS (Kinesis, DynamoDB, Timestream, S3, Lambda)",
-        "Redis",
-        "Microservices",
-        "Serverless",
-        "AI/ML Sidecar",
-        "LocalStack"
+        "FastAPI",
+        "AWS Lambda",
+        "Amazon Kinesis",
+        "Amazon DynamoDB",
+        "Amazon EventBridge",
+        "Amazon S3",
+        "Amazon Redshift",
+        "Amazon Athena",
+        "Amazon QuickSight",
+        "Amazon SageMaker",
+        "Amazon ECS",
+        "Amazon CloudWatch",
+        "AWS IAM",
+        "AWS Step Functions"
     ],
     "overview": {
         "architecture": {
             "styles": [
-                "Microservices",
                 "Event-Driven",
                 "Serverless",
-                "Clean Architecture"
+                "Microservices"
             ],
             "key_components": [
-                "C# Microservice",
-                "Python AI Sidecar",
-                "Amazon Kinesis",
-                "Amazon DynamoDB",
-                "Amazon Timestream",
-                "Amazon S3",
-                "Redis Cache",
-                "AWS Lambda"
+                "IoT ingestion via API Gateway and Kinesis",
+                "C# microservice with KCL for stream processing",
+                "Python AI sidecar for ML enrichment",
+                "DynamoDB for filtered operational data",
+                "S3 and Firehose for batch analytics",
+                "EventBridge for orchestration and business workflows",
+                "Analytics via Redshift, Athena, QuickSight"
             ]
         },
         "design_patterns": [
-            "Sidecar Pattern",
-            "CQRS (Command Query Responsibility Segregation)"
+            "Sidecar pattern",
+            "Event sourcing",
+            "CQRS (Command Query Responsibility Segregation)",
+            "Pub/Sub with decoupled services"
         ]
     },
+    "architecture": {
+        "style": "Serverless Event-Driven Microservices",
+        "key_components": [
+            "API Gateway",
+            "IoT Core",
+            "Kinesis Data Streams",
+            "ECS-hosted C# Microservice",
+            "Python ML Sidecar",
+            "DynamoDB",
+            "EventBridge",
+            "S3",
+            "Athena",
+            "Redshift",
+            "QuickSight",
+            "Step Functions"
+        ],
+        "diagram_url": "https://example.com/contoso-energy-architecture.png"
+    },
     "challenges": [
-        "High throughput ingestion of 1M events/sec",
-        "Ensuring AI sidecar does not block microservice processing",
-        "Cost-efficient architecture for intermittent sidecar usage",
-        "Maintaining low latency for hot queries"
+        "Scaling ingestion for millions of telemetry events per hour",
+        "Ensuring low-latency enrichment without blocking processing",
+        "Maintaining cost efficiency while handling peak loads",
+        "Securing cross-service communication in a multi-tenant environment"
     ],
     "impact": {
         "metrics": {
-            "processing_time_reduction": "Handled up to 1M events/sec without bottlenecks",
-            "cost_savings": "Optimized sidecar usage and serverless components reduced operational cost by ~30%",
-            "transactions_processed": "Millions of events processed per day across devices"
+            "processing_time_reduction": "40% faster compared to legacy batch system",
+            "cost_savings": "30% lower infrastructure cost due to serverless adoption",
+            "transactions_processed": "Over 5 million telemetry events daily"
         },
-        "business_outcome": "Enabled scalable energy event processing with predictive insights and analytics dashboards, improving operational efficiency and anomaly detection."
+        "business_outcome": "Enabled real-time monitoring of energy usage and predictive insights, improving customer transparency and grid efficiency."
     },
     "links": {
-        "github": "https://github.com/YOUR_GITHUB_USERNAME/energy-microservice",
-        "demo": "",
-        "docs": ""
+        "github": "https://github.com/your-username/portfolio-serverless-event-architecture-python-aws",
+        "demo": "https://demo.contoso-energy.com",
+        "docs": "https://docs.contoso-energy.com"
     },
     "media": [
         {
             "type": "image",
-            "url": "",
-            "caption": "Architecture diagram"
+            "url": "https://example.com/screenshots/dashboard.png",
+            "caption": "Real-time energy dashboard powered by QuickSight and Grafana"
+        },
+        {
+            "type": "diagram",
+            "url": "https://example.com/contoso-energy-architecture.png",
+            "caption": "Enterprise AWS serverless architecture"
         }
     ],
     "timeline": {
-        "start": "2025-01",
-        "end": "2025-03"
+        "start": "2024-02",
+        "end": "2024-06"
     },
     "tags": [
-        "microservice",
-        "serverless",
         "AWS",
+        "Serverless",
+        "Event-Driven",
+        "Energy",
+        "IoT",
+        "AI/ML",
+        "AI",
         "C#",
         "Python",
-        "AI",
-        "full-stack"
+        "Microservices",
+        "Data Analytics",
+        "Architecture",
+        "Cloud",
+        "DynamoDB",
+        "Kinesis",
+        "EventBridge",
+        "Step Functions",
+        "QuickSight",
+        "Redshift",
+        "Athena",
+        "S3",
+        "ECS",
+        "Lambda",
+        "IoT Core",
+        "API Gateway"
     ],
     "flow": {
         "steps": [
             {
-                "id": "step-1",
-                "type": "ingestion",
-                "name": "Event Ingestion",
-                "action": "Receive JSON events from energy devices and push to Kinesis stream",
-                "params": {
-                    "payload_size": "100-500 bytes",
-                    "throughput": "1M records/sec"
-                },
-                "depends_on": [],
-                "retries": 3,
-                "timeout_sec": 5
+                "id": "1",
+                "type": "ingest",
+                "name": "Telemetry Ingestion",
+                "action": "Collect IoT telemetry via API Gateway into Kinesis"
             },
             {
-                "id": "step-2",
-                "type": "microservice",
-                "name": "C# Microservice Processing",
-                "action": "Consume Kinesis events, persist to DynamoDB, trigger AI sidecar",
-                "params": {
-                    "db_table": "EnergyEvents",
-                    "sidecar_trigger": true
-                },
+                "id": "2",
+                "type": "process",
+                "name": "Stream Processing",
+                "action": "C# microservice consumes events with KCL and applies business rules",
                 "depends_on": [
-                    "step-1"
+                    "1"
                 ],
                 "retries": 3,
-                "timeout_sec": 10
-            },
-            {
-                "id": "step-3",
-                "type": "sidecar",
-                "name": "Python AI Sidecar",
-                "action": "Enrich events with AI predictions and write to S3 / DocumentDB",
-                "params": {
-                    "ai_model": "EventAnomalyDetector",
-                    "batch_size": 1000
-                },
-                "depends_on": [
-                    "step-2"
-                ],
-                "retries": 2,
-                "timeout_sec": 20
-            },
-            {
-                "id": "step-4",
-                "type": "analytics",
-                "name": "Time-Series Analytics",
-                "action": "Aggregate and query events from Timestream for dashboards",
-                "params": {
-                    "aggregation_interval": "1h"
-                },
-                "depends_on": [
-                    "step-3"
-                ],
-                "retries": 1,
                 "timeout_sec": 30
             },
             {
-                "id": "step-5",
-                "type": "cache",
-                "name": "Hot Storage / Cache",
-                "action": "Store frequently accessed data in Redis for low-latency queries",
-                "params": {
-                    "ttl_sec": 300
-                },
+                "id": "3",
+                "type": "enrich",
+                "name": "AI Enrichment",
+                "action": "Python sidecar performs ML-based enrichment on telemetry data",
                 "depends_on": [
-                    "step-2"
-                ],
-                "retries": 1,
-                "timeout_sec": 5
+                    "2"
+                ]
             },
             {
-                "id": "step-6",
-                "type": "documentation",
-                "name": "Code Documentation & Metadata",
-                "action": "Generate documentation and metadata for all microservices and sidecar using automated doc engine",
-                "params": {
-                    "doc_engine": "AutoDocGen",
-                    "output_format": "Markdown/JSON"
-                },
+                "id": "4",
+                "type": "persist",
+                "name": "Data Persistence",
+                "action": "Store operational data in DynamoDB and analytical data in S3",
                 "depends_on": [
-                    "step-2",
-                    "step-3"
-                ],
-                "retries": 1,
-                "timeout_sec": 60
+                    "2",
+                    "3"
+                ]
+            },
+            {
+                "id": "5",
+                "type": "orchestrate",
+                "name": "Event Orchestration",
+                "action": "EventBridge triggers workflows via Step Functions, SQS, and SNS",
+                "depends_on": [
+                    "4"
+                ]
+            },
+            {
+                "id": "6",
+                "type": "analyze",
+                "name": "Analytics & Dashboards",
+                "action": "Athena and Redshift queries feed QuickSight/Grafana dashboards",
+                "depends_on": [
+                    "4",
+                    "5"
+                ]
             }
         ]
     }

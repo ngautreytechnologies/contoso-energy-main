@@ -1,0 +1,121 @@
+openapi: 3.1.0
+info:
+  title: Contoso Energy Event Service API
+  description: API for ingesting, managing, and analyzing energy telemetry events with AI-powered anomaly detection.
+  version: 1.0.0
+servers:
+  - url: https://api.contosoenergy.local
+    description: Local API server
+  - url: https://api.contosoenergy.dev
+    description: Dev API server
+  - url: https://api.contosoenergy.staging
+    description: Staging API server
+  - url: https://api.contosoenergy.production
+    description: Production API server
+
+tags:
+  - name: events
+    description: Energy event ingestion and querying (FR-01, FR-02)
+  - name: ai
+    description: AI anomaly detection and predictions (FR-03)
+  - name: customers
+    description: Customer and asset data (FR-04)
+  - name: auth
+    description: Authentication and security (FR-05)
+  - name: MVP
+    description: Endpoints included in MVP/interview solution
+
+paths:
+  /events:
+    post:
+      tags:
+        - events
+        - MVP
+      summary: Ingest a new energy telemetry event
+      operationId: ingestEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnergyEvent'
+      responses:
+        '202':
+          description: Event accepted for processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventAck'
+    get:
+      tags:
+        - events
+      summary: Query recent events
+      operationId: listEvents
+      parameters:
+        - name: customerId
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: List of telemetry events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EnergyEvent'
+
+  /events/{id}:
+    get:
+      tags:
+        - events
+        - MVP
+      summary: Get a specific event
+      operationId: getEventById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Telemetry event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnergyEvent'
+        '404':
+          description: Event not found
+
+  /ai/analyze:
+    post:
+      tags:
+        - ai
+        - MVP
+      summary: Analyze an event batch with anomaly detection model
+      operationId: analyzeEvents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                events:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/EnergyEvent'
+      responses:
+        '200':
+          description: Anomaly analysis results
+          content:
+            application/json:
+              schema:

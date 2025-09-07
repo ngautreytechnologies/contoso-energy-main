@@ -1,15 +1,15 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Portfolio Project Story Schema",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./schemas/story.schema.json",
+    "title": "Project Story Schema",
+    "description": "Schema for portfolio project stories with flow steps, highlights, architecture, and impact.",
     "type": "object",
     "required": [
         "title",
         "summary",
-        "problem",
         "solution",
-        "role",
         "tech_stack",
-        "overview"
+        "flow"
     ],
     "properties": {
         "title": {
@@ -18,75 +18,52 @@
         },
         "summary": {
             "type": "string",
-            "description": "One-liner project summary"
+            "description": "One-line summary of the project"
         },
         "problem": {
             "type": "string",
-            "description": "The main challenge this project solves"
+            "description": "Problem being solved"
         },
         "solution": {
             "type": "string",
-            "description": "How the problem was solved"
+            "description": "High-level solution"
         },
-        "role": {
-            "type": "string",
-            "description": "Your role and contributions"
+        "highlights": {
+            "type": "array",
+            "description": "Key highlights of the project",
+            "items": {
+                "type": "string"
+            }
         },
         "tech_stack": {
             "type": "array",
+            "description": "Technologies used",
             "items": {
                 "type": "string"
-            },
-            "description": "Technologies used in the project"
-        },
-        "overview": {
-            "type": "object",
-            "properties": {
-                "architecture": {
-                    "type": "object",
-                    "properties": {
-                        "styles": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "key_components": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                "design_patterns": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            },
-            "additionalProperties": false
+            }
         },
         "architecture": {
             "type": "object",
             "properties": {
-                "style": {
-                    "type": "string"
+                "styles": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "key_components": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
-                },
-                "diagram_url": {
-                    "type": "string",
-                    "format": "uri"
                 }
-            },
-            "additionalProperties": false
+            }
+        },
+        "design_patterns": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         },
         "challenges": {
             "type": "array",
@@ -99,24 +76,14 @@
             "properties": {
                 "metrics": {
                     "type": "object",
-                    "properties": {
-                        "processing_time_reduction": {
-                            "type": "string"
-                        },
-                        "cost_savings": {
-                            "type": "string"
-                        },
-                        "transactions_processed": {
-                            "type": "string"
-                        }
-                    },
-                    "additionalProperties": false
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "business_outcome": {
                     "type": "string"
                 }
-            },
-            "additionalProperties": false
+            }
         },
         "links": {
             "type": "object",
@@ -136,42 +103,6 @@
             },
             "additionalProperties": false
         },
-        "media": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "required": [
-                    "type",
-                    "url"
-                ],
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    },
-                    "url": {
-                        "type": "string",
-                        "format": "uri"
-                    },
-                    "caption": {
-                        "type": "string"
-                    }
-                },
-                "additionalProperties": false
-            }
-        },
-        "timeline": {
-            "type": "object",
-            "properties": {
-                "start": {
-                    "type": "string",
-                    "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])$"
-                },
-                "end": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
-        },
         "tags": {
             "type": "array",
             "items": {
@@ -180,9 +111,6 @@
         },
         "flow": {
             "type": "object",
-            "required": [
-                "steps"
-            ],
             "properties": {
                 "steps": {
                     "type": "array",
@@ -192,14 +120,26 @@
                             "id",
                             "type",
                             "name",
-                            "action"
+                            "action",
+                            "params"
                         ],
                         "properties": {
                             "id": {
                                 "type": "string"
                             },
                             "type": {
-                                "type": "string"
+                                "type": "string",
+                                "enum": [
+                                    "ingestion",
+                                    "microservice",
+                                    "sidecar",
+                                    "analytics",
+                                    "cache",
+                                    "documentation",
+                                    "code",
+                                    "diagram",
+                                    "text"
+                                ]
                             },
                             "name": {
                                 "type": "string"
@@ -208,7 +148,51 @@
                                 "type": "string"
                             },
                             "params": {
-                                "type": "object"
+                                "type": "object",
+                                "properties": {
+                                    "code_snippets": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "summary": {
+                                                    "type": "string"
+                                                },
+                                                "language": {
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "summary",
+                                                "language",
+                                                "content"
+                                            ]
+                                        }
+                                    },
+                                    "diagrams": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "summary": {
+                                                    "type": "string"
+                                                },
+                                                "url": {
+                                                    "type": "string",
+                                                    "format": "uri"
+                                                }
+                                            },
+                                            "required": [
+                                                "summary",
+                                                "url"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "additionalProperties": true
                             },
                             "depends_on": {
                                 "type": "array",
@@ -222,14 +206,12 @@
                             },
                             "timeout_sec": {
                                 "type": "integer",
-                                "minimum": 0
+                                "minimum": 1
                             }
-                        },
-                        "additionalProperties": false
+                        }
                     }
                 }
-            },
-            "additionalProperties": false
+            }
         }
     },
     "additionalProperties": false
