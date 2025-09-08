@@ -100,31 +100,102 @@
         "end": "2024-06"
     },
     "tags": [
-        "AWS",
-        "Serverless",
-        "Event-Driven",
-        "Energy",
-        "IoT",
-        "AI/ML",
-        "AI",
-        "C#",
-        "Python",
-        "Microservices",
-        "Data Analytics",
-        "Architecture",
-        "Cloud",
-        "DynamoDB",
-        "Kinesis",
-        "EventBridge",
-        "Step Functions",
-        "QuickSight",
-        "Redshift",
-        "Athena",
-        "S3",
-        "ECS",
-        "Lambda",
-        "IoT Core",
-        "API Gateway"
+        {
+            "name": "AI",
+            "summary": "Artificial intelligence applied to telemetry.",
+            "problem": "Raw telemetry lacks contextual insights.",
+            "solution": "Apply ML models for anomaly detection and enrichment.",
+            "children": [
+                {
+                    "name": "ML",
+                    "summary": "Machine learning models running in a sidecar.",
+                    "problem": "Need near real-time enrichment for telemetry data.",
+                    "solution": "Run lightweight models in Python sidecar via shared memory.",
+                    "children": [
+                        {
+                            "name": "AI ML Sidecar",
+                            "summary": "Sidecar enrichment microservice.",
+                            "problem": "C# service cannot handle ML workloads efficiently.",
+                            "solution": "Offload ML to colocated Python container with fast IPC."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "AWS",
+            "summary": "Cloud services backbone powering serverless workflows.",
+            "children": [
+                {
+                    "name": "Kinesis",
+                    "summary": "Streaming ingestion pipeline for IoT telemetry.",
+                    "problem": "High-throughput ingestion of distributed device events.",
+                    "solution": "Use Amazon Kinesis for scalable, ordered event streams."
+                },
+                {
+                    "name": "DynamoDB",
+                    "summary": "Operational data store for telemetry state.",
+                    "problem": "Telemetry needs low-latency operational storage.",
+                    "solution": "Store structured operational data in DynamoDB."
+                },
+                {
+                    "name": "S3",
+                    "summary": "Cost-effective storage for batch and analytical data."
+                },
+                {
+                    "name": "EventBridge",
+                    "summary": "Event bus for orchestration and workflows."
+                },
+                {
+                    "name": "Step Functions",
+                    "summary": "Serverless orchestrator for business processes."
+                },
+                {
+                    "name": "Athena",
+                    "summary": "Ad-hoc query service over data lake."
+                },
+                {
+                    "name": "Redshift",
+                    "summary": "Cloud data warehouse for analytics."
+                },
+                {
+                    "name": "QuickSight",
+                    "summary": "Visualization and dashboarding for telemetry insights."
+                }
+            ]
+        },
+        {
+            "name": "Architecture",
+            "summary": "Patterns and practices ensuring resilience and scalability.",
+            "children": [
+                {
+                    "name": "Serverless",
+                    "summary": "Pay-per-use execution model without server management."
+                },
+                {
+                    "name": "Event-Driven",
+                    "summary": "Loosely coupled systems via asynchronous events."
+                },
+                {
+                    "name": "Microservices",
+                    "summary": "Small, focused services that can scale independently."
+                }
+            ]
+        },
+        {
+            "name": "Languages",
+            "summary": "Core programming languages used in the solution.",
+            "children": [
+                {
+                    "name": "C#",
+                    "summary": "Primary service language for business logic."
+                },
+                {
+                    "name": "Python",
+                    "summary": "ML sidecar and orchestration tasks."
+                }
+            ]
+        }
     ],
     "flow": {
         "steps": [

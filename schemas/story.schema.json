@@ -1,57 +1,72 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "./schemas/story.schema.json",
-    "title": "Project Story Schema",
-    "description": "Schema for portfolio project stories with flow steps, highlights, architecture, and impact.",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Contoso Energy Story Schema",
+    "description": "Validation schema for story.json representing the Contoso Energy project portfolio entry.",
     "type": "object",
     "required": [
         "title",
         "summary",
+        "problem",
         "solution",
         "tech_stack",
+        "overview",
+        "architecture",
+        "challenges",
+        "impact",
+        "links",
+        "media",
+        "timeline",
+        "tags",
         "flow"
     ],
     "properties": {
         "title": {
-            "type": "string",
-            "description": "Project title"
+            "type": "string"
         },
         "summary": {
-            "type": "string",
-            "description": "One-line summary of the project"
+            "type": "string"
         },
         "problem": {
-            "type": "string",
-            "description": "Problem being solved"
+            "type": "string"
         },
         "solution": {
-            "type": "string",
-            "description": "High-level solution"
-        },
-        "highlights": {
-            "type": "array",
-            "description": "Key highlights of the project",
-            "items": {
-                "type": "string"
-            }
+            "type": "string"
         },
         "tech_stack": {
             "type": "array",
-            "description": "Technologies used",
             "items": {
                 "type": "string"
             }
         },
-        "architecture": {
+        "overview": {
             "type": "object",
+            "required": [
+                "architecture",
+                "design_patterns"
+            ],
             "properties": {
-                "styles": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
+                "architecture": {
+                    "type": "object",
+                    "required": [
+                        "styles",
+                        "key_components"
+                    ],
+                    "properties": {
+                        "styles": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "key_components": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
-                "key_components": {
+                "design_patterns": {
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -59,10 +74,27 @@
                 }
             }
         },
-        "design_patterns": {
-            "type": "array",
-            "items": {
-                "type": "string"
+        "architecture": {
+            "type": "object",
+            "required": [
+                "style",
+                "key_components",
+                "diagram_url"
+            ],
+            "properties": {
+                "style": {
+                    "type": "string"
+                },
+                "key_components": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "diagram_url": {
+                    "type": "string",
+                    "format": "uri"
+                }
             }
         },
         "challenges": {
@@ -73,11 +105,23 @@
         },
         "impact": {
             "type": "object",
+            "required": [
+                "metrics",
+                "business_outcome"
+            ],
             "properties": {
                 "metrics": {
                     "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
+                    "properties": {
+                        "processing_time_reduction": {
+                            "type": "string"
+                        },
+                        "cost_savings": {
+                            "type": "string"
+                        },
+                        "transactions_processed": {
+                            "type": "string"
+                        }
                     }
                 },
                 "business_outcome": {
@@ -100,17 +144,88 @@
                     "type": "string",
                     "format": "uri"
                 }
-            },
-            "additionalProperties": false
+            }
+        },
+        "media": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "type",
+                    "url"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "image",
+                            "diagram",
+                            "video"
+                        ]
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "caption": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "timeline": {
+            "type": "object",
+            "required": [
+                "start",
+                "end"
+            ],
+            "properties": {
+                "start": {
+                    "type": "string",
+                    "pattern": "^[0-9]{4}-[0-9]{2}$"
+                },
+                "end": {
+                    "type": "string",
+                    "pattern": "^[0-9]{4}-[0-9]{2}$"
+                }
+            }
         },
         "tags": {
             "type": "array",
+            "description": "Hierarchical tags with metadata",
             "items": {
-                "type": "string"
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "summary": {
+                        "type": "string"
+                    },
+                    "problem": {
+                        "type": "string"
+                    },
+                    "solution": {
+                        "type": "string"
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/properties/tags/items"
+                        }
+                    }
+                },
+                "additionalProperties": false
             }
         },
         "flow": {
             "type": "object",
+            "required": [
+                "steps"
+            ],
             "properties": {
                 "steps": {
                     "type": "array",
@@ -120,8 +235,7 @@
                             "id",
                             "type",
                             "name",
-                            "action",
-                            "params"
+                            "action"
                         ],
                         "properties": {
                             "id": {
@@ -130,15 +244,12 @@
                             "type": {
                                 "type": "string",
                                 "enum": [
-                                    "ingestion",
-                                    "microservice",
-                                    "sidecar",
-                                    "analytics",
-                                    "cache",
-                                    "documentation",
-                                    "code",
-                                    "diagram",
-                                    "text"
+                                    "ingest",
+                                    "process",
+                                    "enrich",
+                                    "persist",
+                                    "orchestrate",
+                                    "analyze"
                                 ]
                             },
                             "name": {
@@ -146,53 +257,6 @@
                             },
                             "action": {
                                 "type": "string"
-                            },
-                            "params": {
-                                "type": "object",
-                                "properties": {
-                                    "code_snippets": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "summary": {
-                                                    "type": "string"
-                                                },
-                                                "language": {
-                                                    "type": "string"
-                                                },
-                                                "content": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "required": [
-                                                "summary",
-                                                "language",
-                                                "content"
-                                            ]
-                                        }
-                                    },
-                                    "diagrams": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "summary": {
-                                                    "type": "string"
-                                                },
-                                                "url": {
-                                                    "type": "string",
-                                                    "format": "uri"
-                                                }
-                                            },
-                                            "required": [
-                                                "summary",
-                                                "url"
-                                            ]
-                                        }
-                                    }
-                                },
-                                "additionalProperties": true
                             },
                             "depends_on": {
                                 "type": "array",
@@ -206,13 +270,12 @@
                             },
                             "timeout_sec": {
                                 "type": "integer",
-                                "minimum": 1
+                                "minimum": 0
                             }
                         }
                     }
                 }
             }
         }
-    },
-    "additionalProperties": false
+    }
 }
