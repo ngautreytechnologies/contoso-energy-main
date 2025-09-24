@@ -1,9 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Contoso Energy - Serverless Event-Driven Architecture",
-    "summary": "An enterprise-grade event-driven platform for processing and enriching energy telemetry data using AWS serverless services and ML pipelines.",
-    "problem": "Energy providers face challenges ingesting high-volume telemetry from distributed devices, enriching it with AI insights, and delivering real-time analytics without scaling issues or high operational overhead.",
-    "solution": "Built a loosely coupled, serverless event-driven architecture on AWS where IoT telemetry flows through Kinesis into a C# microservice, enriched via a Python AI sidecar, persisted in DynamoDB and S3, orchestrated with EventBridge and Step Functions, and analyzed through Redshift, Athena, and QuickSight dashboards.",
+    "title": "Contoso Energy - Unobtrusive AI Integration in Serverless Event-Driven Architecture",
+    "summary": "An enterprise-grade event-driven platform that layers machine learning and intelligent enrichment invisibly into existing energy data workflows — without disrupting operations or requiring application rewrites.",
+    "problem": "Large energy companies struggle to embed AI into existing data pipelines without costly re-engineering. Many existing systems cannot tolerate downtime or major refactors, yet real-time intelligence is needed for anomaly detection, predictive maintenance, and customer analytics.",
+    "solution": "Designed a serverless, event-driven backbone that injects AI into the data lifecycle as an enrichment layer — deployed alongside existing microservices without changing upstream producers or downstream consumers. IoT telemetry streams into Kinesis and is processed by a C# microservice, with a Python ML sidecar performing inference transparently. Results are persisted and orchestrated with EventBridge and Step Functions, feeding analytics layers without disrupting business workflows.",
     "tech_stack": [
         "C#",
         "Python",
@@ -27,33 +27,35 @@
             "styles": [
                 "Event-Driven",
                 "Serverless",
-                "Microservices"
+                "Microservices",
+                "AI-as-a-Service"
             ],
             "key_components": [
                 "IoT ingestion via API Gateway and Kinesis",
                 "C# microservice with KCL for stream processing",
-                "Python AI sidecar for ML enrichment",
-                "DynamoDB for filtered operational data",
-                "S3 and Firehose for batch analytics",
-                "EventBridge for orchestration and business workflows",
-                "Analytics via Redshift, Athena, QuickSight"
+                "Python AI sidecar for transparent ML enrichment",
+                "DynamoDB for enriched operational state",
+                "S3 for historical telemetry and feature stores",
+                "EventBridge for decoupled orchestration",
+                "Analytics layer powered by Athena, Redshift, QuickSight"
             ]
         },
         "design_patterns": [
             "Sidecar pattern",
+            "Decorator pattern (AI enrichment as a transparent layer)",
             "Event sourcing",
-            "CQRS (Command Query Responsibility Segregation)",
-            "Pub/Sub with decoupled services"
+            "Pub/Sub",
+            "Strangler pattern (progressive enhancement without refactor)"
         ]
     },
     "architecture": {
-        "style": "Serverless Event-Driven Microservices",
+        "style": "Serverless Event-Driven Microservices with AI Layering",
         "key_components": [
             "API Gateway",
             "IoT Core",
             "Kinesis Data Streams",
             "ECS-hosted C# Microservice",
-            "Python ML Sidecar",
+            "Python AI Sidecar",
             "DynamoDB",
             "EventBridge",
             "S3",
@@ -65,34 +67,35 @@
         "diagram_url": "https://example.com/contoso-energy-architecture.png"
     },
     "challenges": [
-        "Scaling ingestion for millions of telemetry events per hour",
-        "Ensuring low-latency enrichment without blocking processing",
-        "Maintaining cost efficiency while handling peak loads",
-        "Securing cross-service communication in a multi-tenant environment"
+        "Integrating AI without modifying legacy ingestion or storage systems",
+        "Maintaining latency SLAs while performing inference at scale",
+        "Ensuring explainability and traceability for enriched data",
+        "Supporting incremental rollout with no service downtime"
     ],
     "impact": {
         "metrics": {
             "processing_time_reduction": "40% faster compared to legacy batch system",
             "cost_savings": "30% lower infrastructure cost due to serverless adoption",
-            "transactions_processed": "Over 5 million telemetry events daily"
+            "transactions_processed": "Over 5 million telemetry events daily",
+            "integration_cost_savings": "Zero upstream code changes required for AI integration"
         },
-        "business_outcome": "Enabled real-time monitoring of energy usage and predictive insights, improving customer transparency and grid efficiency."
+        "business_outcome": "Enabled real-time intelligence across existing energy telemetry pipelines with zero operational disruption, unlocking predictive maintenance, anomaly detection, and customer-facing insights."
     },
     "links": {
         "github": "https://github.com/your-username/portfolio-serverless-event-architecture-python-aws",
-        "demo": "https://demo.contoso-energy.com",
-        "docs": "https://docs.contoso-energy.com"
+        "demo": "https://demo.contoso-energy.example",
+        "docs": "https://docs.contoso-energy.example"
     },
     "media": [
         {
             "type": "image",
             "url": "https://example.com/screenshots/dashboard.png",
-            "caption": "Real-time energy dashboard powered by QuickSight and Grafana"
+            "caption": "Real-time anomaly detection dashboard"
         },
         {
             "type": "diagram",
             "url": "https://example.com/contoso-energy-architecture.png",
-            "caption": "Enterprise AWS serverless architecture"
+            "caption": "Unobtrusive AI layer integrated into event pipeline"
         }
     ],
     "timeline": {
@@ -102,99 +105,15 @@
     "tags": [
         {
             "name": "AI",
-            "summary": "Artificial intelligence applied to telemetry.",
-            "problem": "Raw telemetry lacks contextual insights.",
-            "solution": "Apply ML models for anomaly detection and enrichment.",
-            "children": [
-                {
-                    "name": "ML",
-                    "summary": "Machine learning models running in a sidecar.",
-                    "problem": "Need near real-time enrichment for telemetry data.",
-                    "solution": "Run lightweight models in Python sidecar via shared memory.",
-                    "children": [
-                        {
-                            "name": "AI ML Sidecar",
-                            "summary": "Sidecar enrichment microservice.",
-                            "problem": "C# service cannot handle ML workloads efficiently.",
-                            "solution": "Offload ML to colocated Python container with fast IPC."
-                        }
-                    ]
-                }
-            ]
+            "summary": "Transparent enrichment with ML and anomaly detection"
         },
         {
             "name": "AWS",
-            "summary": "Cloud services backbone powering serverless workflows.",
-            "children": [
-                {
-                    "name": "Kinesis",
-                    "summary": "Streaming ingestion pipeline for IoT telemetry.",
-                    "problem": "High-throughput ingestion of distributed device events.",
-                    "solution": "Use Amazon Kinesis for scalable, ordered event streams."
-                },
-                {
-                    "name": "DynamoDB",
-                    "summary": "Operational data store for telemetry state.",
-                    "problem": "Telemetry needs low-latency operational storage.",
-                    "solution": "Store structured operational data in DynamoDB."
-                },
-                {
-                    "name": "S3",
-                    "summary": "Cost-effective storage for batch and analytical data."
-                },
-                {
-                    "name": "EventBridge",
-                    "summary": "Event bus for orchestration and workflows."
-                },
-                {
-                    "name": "Step Functions",
-                    "summary": "Serverless orchestrator for business processes."
-                },
-                {
-                    "name": "Athena",
-                    "summary": "Ad-hoc query service over data lake."
-                },
-                {
-                    "name": "Redshift",
-                    "summary": "Cloud data warehouse for analytics."
-                },
-                {
-                    "name": "QuickSight",
-                    "summary": "Visualization and dashboarding for telemetry insights."
-                }
-            ]
+            "summary": "Serverless ingestion, orchestration, and analytics"
         },
         {
             "name": "Architecture",
-            "summary": "Patterns and practices ensuring resilience and scalability.",
-            "children": [
-                {
-                    "name": "Serverless",
-                    "summary": "Pay-per-use execution model without server management."
-                },
-                {
-                    "name": "Event-Driven",
-                    "summary": "Loosely coupled systems via asynchronous events."
-                },
-                {
-                    "name": "Microservices",
-                    "summary": "Small, focused services that can scale independently."
-                }
-            ]
-        },
-        {
-            "name": "Languages",
-            "summary": "Core programming languages used in the solution.",
-            "children": [
-                {
-                    "name": "C#",
-                    "summary": "Primary service language for business logic."
-                },
-                {
-                    "name": "Python",
-                    "summary": "ML sidecar and orchestration tasks."
-                }
-            ]
+            "summary": "Event-driven, sidecar, and decorator integration patterns"
         }
     ],
     "flow": {
@@ -209,10 +128,7 @@
                 "id": "2",
                 "type": "process",
                 "name": "Stream Processing",
-                "action": "C# microservice consumes events with KCL and applies business rules",
-                "depends_on": [
-                    "1"
-                ],
+                "action": "C# microservice consumes events with KCL and applies domain rules",
                 "retries": 3,
                 "timeout_sec": 30
             },
@@ -220,39 +136,25 @@
                 "id": "3",
                 "type": "enrich",
                 "name": "AI Enrichment",
-                "action": "Python sidecar performs ML-based enrichment on telemetry data",
-                "depends_on": [
-                    "2"
-                ]
+                "action": "Python sidecar transparently enriches events with anomaly detection and predictive features"
             },
             {
                 "id": "4",
                 "type": "persist",
                 "name": "Data Persistence",
-                "action": "Store operational data in DynamoDB and analytical data in S3",
-                "depends_on": [
-                    "2",
-                    "3"
-                ]
+                "action": "Enriched data stored in DynamoDB and S3 without changing existing schemas"
             },
             {
                 "id": "5",
                 "type": "orchestrate",
                 "name": "Event Orchestration",
-                "action": "EventBridge triggers workflows via Step Functions, SQS, and SNS",
-                "depends_on": [
-                    "4"
-                ]
+                "action": "EventBridge triggers workflows via Step Functions, SNS, and downstream APIs"
             },
             {
                 "id": "6",
                 "type": "analyze",
-                "name": "Analytics & Dashboards",
-                "action": "Athena and Redshift queries feed QuickSight/Grafana dashboards",
-                "depends_on": [
-                    "4",
-                    "5"
-                ]
+                "name": "Analytics & Insights",
+                "action": "Athena and Redshift queries power QuickSight dashboards for anomaly trends and predictions"
             }
         ]
     }
